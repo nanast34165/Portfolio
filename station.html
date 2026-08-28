@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>木洩駅（こもれえき）｜山あいの無人駅と、その季節</title>
+    <meta
+      name="description"
+      content="一日十二本。山あいの小さな無人駅「木洩駅」の時刻表、四季の風景、駅ノート、周辺の歩きかたを紹介する架空の駅サイトです。"
+    />
+    <style>
+      :root {
+        --ink: #2f2a24;
+        --ink-soft: #6b6055;
+        --paper: #f6f1e6;
+        --paper-deep: #ebe2d2;
+        --wood: #7a5c3e;
+        --wood-dark: #4b3826;
+        --rail: #8d9b8a;
+        --sky: #cfe0e6;
+        --accent: #a4553c;
+        --line: rgba(75, 56, 38, 0.18);
+        --serif: "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "MS PMincho", serif;
+        --sans: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: var(--sans);
+        color: var(--ink);
+        background-color: var(--paper);
+        background-image: radial-gradient(rgba(122, 92, 62, 0.07) 1px, transparent 1px);
+        background-size: 4px 4px;
+        line-height: 1.9;
+        letter-spacing: 0.04em;
+      }
+
+      img,
+      svg {
+        display: block;
+        max-width: 100%;
+      }
+
+      /* ===== ヘッダー ===== */
+      .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 14px 28px;
+        background: rgba(246, 241, 230, 0.82);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .header__logo {
+        font-family: var(--serif);
+        font-size: 21px;
+        letter-spacing: 0.3em;
+        white-space: nowrap;
+      }
+
+      .header__logo span {
+        display: block;
+        font-family: var(--sans);
+        font-size: 10px;
+        letter-spacing: 0.4em;
+        color: var(--ink-soft);
+      }
+
+      .nav ul {
+        display: flex;
+        gap: 30px;
+        list-style: none;
+        font-size: 14px;
+      }
+
+      .nav a {
+        position: relative;
+        color: var(--ink);
+        text-decoration: none;
+        padding-bottom: 4px;
+      }
+
+      .nav a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 0;
+        height: 1px;
+        background: var(--accent);
+        transition: width 0.35s ease;
+      }
+
+      .nav a:hover::after,
+      .nav a:focus-visible::after {
+        width: 100%;
+      }
+
+      .nav__toggle {
+        display: none;
+        border: 1px solid var(--line);
+        background: transparent;
+        color: var(--ink);
+        font-size: 13px;
+        padding: 7px 13px;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+
+      /* ===== ヒーロー ===== */
+      .hero {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        background: linear-gradient(180deg, #dfe9ec 0%, #e9e3d3 62%, #d9d3c0 100%);
+      }
+
+      .hero__scene {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .hero__scene svg {
+        width: 100%;
+        height: 100%;
+      }
+
+      .cloud {
+        animation: drift 90s linear infinite;
+      }
+
+      .cloud--slow {
+        animation-duration: 140s;
+      }
+
+      @keyframes drift {
+        from {
+          transform: translateX(-260px);
+        }
+        to {
+          transform: translateX(1500px);
+        }
+      }
+
+      .hero__inner {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        padding: 120px 24px 160px;
+      }
+
+      .hero__sign {
+        display: inline-block;
+        padding: 26px 46px;
+        background: rgba(255, 253, 247, 0.9);
+        border: 1px solid var(--wood);
+        border-radius: 2px;
+        box-shadow: 0 18px 40px rgba(75, 56, 38, 0.16);
+      }
+
+      .hero__station {
+        font-family: var(--serif);
+        font-size: clamp(38px, 8vw, 74px);
+        letter-spacing: 0.34em;
+        text-indent: 0.34em;
+        line-height: 1.25;
+      }
+
+      .hero__romaji {
+        font-size: 12px;
+        letter-spacing: 0.52em;
+        text-indent: 0.52em;
+        color: var(--ink-soft);
+        margin-top: 6px;
+      }
+
+      .hero__neighbors {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+        margin-top: 22px;
+        padding-top: 18px;
+        border-top: 1px solid var(--line);
+        font-size: 12px;
+        color: var(--ink-soft);
+        letter-spacing: 0.2em;
+      }
+
+      .hero__lead {
+        margin-top: 40px;
+        font-family: var(--serif);
+        font-size: clamp(15px, 2.4vw, 19px);
+        line-height: 2.4;
+        color: var(--ink);
+        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+      }
+
+      .hero__scroll {
+        position: absolute;
+        left: 50%;
+        bottom: 26px;
+        transform: translateX(-50%);
+        z-index: 2;
+        font-size: 10px;
+        letter-spacing: 0.42em;
+        color: var(--ink-soft);
+        writing-mode: vertical-rl;
+      }
+
+      .hero__scroll::after {
+        content: "";
+        display: block;
+        width: 1px;
+        height: 46px;
+        margin: 10px auto 0;
+        background: linear-gradient(var(--ink-soft), transparent);
+        animation: fall 2.4s ease-in-out infinite;
+      }
+
+      @keyframes fall {
+        0% {
+          opacity: 0;
+          transform: scaleY(0.2);
+          transform-origin: top;
+        }
+        45% {
+          opacity: 1;
+          transform: scaleY(1);
+          transform-origin: top;
+        }
+        100% {
+          opacity: 0;
+          transform: scaleY(1);
+          transform-origin: bottom;
+        }
+      }
+
+      /* ===== 共通レイアウト ===== */
+      .section {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 108px 24px;
+      }
+
+      .section__head {
+        margin-bottom: 52px;
+        text-align: center;
+      }
+
+      .section__num {
+        font-size: 11px;
+        letter-spacing: 0.4em;
+        color: var(--accent);
+      }
+
+      .section__title {
+        font-family: var(--serif);
+        font-size: clamp(24px, 4vw, 33px);
+        letter-spacing: 0.22em;
+        text-indent: 0.22em;
+        margin-top: 10px;
+      }
+
+      .section__sub {
+        margin-top: 12px;
+        font-size: 13px;
+        color: var(--ink-soft);
+        letter-spacing: 0.18em;
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(26px);
+        transition: opacity 1s ease, transform 1s ease;
+      }
+
+      .reveal.is-shown {
+        opacity: 1;
+        transform: none;
+      }
+
+      /* ===== 駅の紹介 ===== */
+      .about {
+        background: var(--paper-deep);
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .about__grid {
+        display: grid;
+        grid-template-columns: 1.15fr 1fr;
+        gap: 56px;
+        align-items: center;
+      }
+
+      .about__text p + p {
+        margin-top: 22px;
+      }
+
+      .about__text p {
+        font-family: var(--serif);
+        font-size: 16px;
+        line-height: 2.5;
+      }
+
+      .about__facts {
+        list-style: none;
+        border-top: 1px solid var(--line);
+      }
+
+      .about__facts li {
+        display: flex;
+        justify-content: space-between;
+        gap: 18px;
+        padding: 15px 4px;
+        border-bottom: 1px solid var(--line);
+        font-size: 14px;
+      }
+
+      .about__facts dt,
+      .about__facts .label {
+        color: var(--ink-soft);
+        letter-spacing: 0.16em;
+        white-space: nowrap;
+      }
+
+      .about__facts .value {
+        font-family: var(--serif);
+        text-align: right;
+      }
+
+      /* ===== 時刻表 ===== */
+      .timetable__board {
+        background: var(--wood-dark);
+        color: #f4ece0;
+        border-radius: 4px;
+        padding: 30px clamp(18px, 4vw, 40px) 36px;
+        box-shadow: inset 0 0 0 6px rgba(244, 236, 224, 0.08), 0 20px 44px rgba(47, 42, 36, 0.24);
+      }
+
+      .timetable__next {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 8px 18px;
+        padding-bottom: 22px;
+        margin-bottom: 24px;
+        border-bottom: 1px dashed rgba(244, 236, 224, 0.3);
+        font-size: 14px;
+        letter-spacing: 0.16em;
+      }
+
+      .timetable__next strong {
+        font-family: var(--serif);
+        font-size: 30px;
+        letter-spacing: 0.1em;
+        color: #f6d6a8;
+      }
+
+      .timetable__tabs {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 22px;
+      }
+
+      .tab {
+        flex: 0 0 auto;
+        padding: 9px 24px;
+        font-size: 13px;
+        letter-spacing: 0.2em;
+        color: #e6dccc;
+        background: transparent;
+        border: 1px solid rgba(244, 236, 224, 0.35);
+        border-radius: 2px;
+        cursor: pointer;
+        transition: background 0.3s ease, color 0.3s ease;
+      }
+
+      .tab[aria-selected="true"] {
+        background: #f4ece0;
+        color: var(--wood-dark);
+      }
+
+      .hours {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(184px, 1fr));
+        gap: 2px 26px;
+      }
+
+      .hours__row {
+        display: flex;
+        gap: 16px;
+        align-items: baseline;
+        padding: 9px 0;
+        border-bottom: 1px solid rgba(244, 236, 224, 0.14);
+      }
+
+      .hours__h {
+        font-family: var(--serif);
+        font-size: 22px;
+        min-width: 40px;
+        color: #f6d6a8;
+      }
+
+      .hours__m {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        font-size: 15px;
+        letter-spacing: 0.1em;
+      }
+
+      .hours__m span.is-last {
+        color: #f0a58b;
+      }
+
+      .timetable__note {
+        margin-top: 22px;
+        font-size: 12px;
+        color: rgba(244, 236, 224, 0.66);
+        letter-spacing: 0.12em;
+      }
+
+      /* ===== 四季 ===== */
+      .seasons {
+        background: var(--paper-deep);
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .seasons__stage {
+        position: relative;
+        border-radius: 4px;
+        overflow: hidden;
+        box-shadow: 0 20px 44px rgba(47, 42, 36, 0.16);
+      }
+
+      .slide {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        transition: opacity 1.1s ease;
+        display: flex;
+        align-items: flex-end;
+      }
+
+      .slide.is-active {
+        position: relative;
+        opacity: 1;
+      }
+
+      .slide__art {
+        position: absolute;
+        inset: 0;
+      }
+
+      .slide__body {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        padding: clamp(30px, 6vw, 62px);
+        background: linear-gradient(transparent, rgba(35, 30, 25, 0.72));
+        color: #fdf8ef;
+      }
+
+      .slide__season {
+        font-family: var(--serif);
+        font-size: clamp(26px, 5vw, 40px);
+        letter-spacing: 0.24em;
+      }
+
+      .slide__copy {
+        margin-top: 12px;
+        max-width: 560px;
+        font-size: 14px;
+        line-height: 2.2;
+      }
+
+      .seasons__stage {
+        height: clamp(320px, 52vw, 460px);
+      }
+
+      .seasons__nav {
+        display: flex;
+        justify-content: center;
+        gap: 14px;
+        margin-top: 26px;
+      }
+
+      .dot {
+        width: 46px;
+        height: 3px;
+        border: none;
+        background: rgba(75, 56, 38, 0.22);
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+
+      .dot[aria-current="true"] {
+        background: var(--accent);
+      }
+
+      /* ===== 周辺の歩きかた ===== */
+      .walks {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(268px, 1fr));
+        gap: 26px;
+      }
+
+      .walk {
+        background: #fffdf7;
+        border: 1px solid var(--line);
+        border-radius: 3px;
+        padding: 30px 26px 32px;
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+      }
+
+      .walk:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 18px 34px rgba(75, 56, 38, 0.14);
+      }
+
+      .walk__icon {
+        width: 54px;
+        height: 54px;
+        margin-bottom: 18px;
+      }
+
+      .walk__time {
+        font-size: 11px;
+        letter-spacing: 0.28em;
+        color: var(--accent);
+      }
+
+      .walk__name {
+        font-family: var(--serif);
+        font-size: 20px;
+        letter-spacing: 0.12em;
+        margin: 8px 0 12px;
+      }
+
+      .walk__text {
+        font-size: 14px;
+        color: var(--ink-soft);
+        line-height: 2.1;
+      }
+
+      /* ===== 駅ノート ===== */
+      .notes {
+        background: var(--wood-dark);
+        color: #f4ece0;
+      }
+
+      .notes .section__title,
+      .notes .section__sub {
+        color: #f4ece0;
+      }
+
+      .notes .section__num {
+        color: #f6d6a8;
+      }
+
+      .notes__list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 22px;
+      }
+
+      .note {
+        position: relative;
+        background: #fffdf3;
+        color: var(--ink);
+        padding: 30px 26px 26px;
+        border-radius: 2px;
+        box-shadow: 0 14px 30px rgba(0, 0, 0, 0.22);
+        background-image: repeating-linear-gradient(
+          transparent,
+          transparent 30px,
+          rgba(122, 92, 62, 0.14) 31px
+        );
+      }
+
+      .note:nth-child(odd) {
+        transform: rotate(-0.7deg);
+      }
+
+      .note:nth-child(even) {
+        transform: rotate(0.6deg);
+      }
+
+      .note__text {
+        font-family: var(--serif);
+        font-size: 15px;
+        line-height: 2.06;
+      }
+
+      .note__meta {
+        margin-top: 16px;
+        font-size: 12px;
+        color: var(--ink-soft);
+        letter-spacing: 0.14em;
+        text-align: right;
+      }
+
+      /* ===== アクセス ===== */
+      .access__grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        align-items: start;
+      }
+
+      .access__map {
+        height: 340px;
+        border: 1px solid var(--line);
+        border-radius: 3px;
+        overflow: hidden;
+        background: var(--paper-deep);
+      }
+
+      .access__map iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+
+      .access__list {
+        list-style: none;
+      }
+
+      .access__list li {
+        padding: 16px 2px;
+        border-bottom: 1px solid var(--line);
+        font-size: 14px;
+      }
+
+      .access__list b {
+        display: block;
+        font-size: 12px;
+        letter-spacing: 0.22em;
+        color: var(--ink-soft);
+        font-weight: normal;
+        margin-bottom: 4px;
+      }
+
+      /* ===== フッター ===== */
+      .footer {
+        background: var(--paper-deep);
+        border-top: 1px solid var(--line);
+        padding: 56px 24px 40px;
+        text-align: center;
+      }
+
+      .footer__mark {
+        font-family: var(--serif);
+        font-size: 18px;
+        letter-spacing: 0.36em;
+        text-indent: 0.36em;
+      }
+
+      .footer__rail {
+        max-width: 620px;
+        margin: 26px auto;
+      }
+
+      .footer__note {
+        font-size: 12px;
+        color: var(--ink-soft);
+        line-height: 2;
+      }
+
+      /* ===== レスポンシブ ===== */
+      @media (max-width: 900px) {
+        .about__grid,
+        .access__grid {
+          grid-template-columns: 1fr;
+          gap: 34px;
+        }
+      }
+
+      @media (max-width: 720px) {
+        .header {
+          flex-wrap: wrap;
+          padding: 12px 18px;
+        }
+
+        .nav {
+          width: 100%;
+          max-height: 0;
+          overflow: hidden;
+          transition: max-height 0.4s ease;
+        }
+
+        .nav.is-open {
+          max-height: 340px;
+        }
+
+        .nav ul {
+          flex-direction: column;
+          gap: 0;
+          padding: 8px 0 4px;
+        }
+
+        .nav li {
+          border-top: 1px solid var(--line);
+        }
+
+        .nav a {
+          display: block;
+          padding: 13px 4px;
+        }
+
+        .nav__toggle {
+          display: block;
+        }
+
+        .section {
+          padding: 78px 20px;
+        }
+
+        .hours {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation: none !important;
+          transition: none !important;
+        }
+
+        .reveal {
+          opacity: 1;
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="header__logo">
+        木洩駅
+        <span>KOMORE STATION</span>
+      </div>
+      <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="globalNav">
+        MENU
+      </button>
+      <nav class="nav" id="globalNav">
+        <ul>
+          <li><a href="#about">駅のこと</a></li>
+          <li><a href="#timetable">時刻表</a></li>
+          <li><a href="#seasons">四季</a></li>
+          <li><a href="#walks">まちを歩く</a></li>
+          <li><a href="#notes">駅ノート</a></li>
+          <li><a href="#access">アクセス</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- ヒーロー -->
+    <section class="hero">
+      <div class="hero__scene" aria-hidden="true">
+        <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMax slice">
+          <defs>
+            <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#d7e6ea" />
+              <stop offset="55%" stop-color="#e9e5d6" />
+              <stop offset="100%" stop-color="#dcd6c2" />
+            </linearGradient>
+            <linearGradient id="farHill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#a9b8ad" />
+              <stop offset="100%" stop-color="#c2cbb9" />
+            </linearGradient>
+            <linearGradient id="nearHill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#8b9d88" />
+              <stop offset="100%" stop-color="#9dab8d" />
+            </linearGradient>
+          </defs>
+
+          <rect width="1440" height="900" fill="url(#skyGrad)" />
+          <circle cx="1160" cy="180" r="66" fill="#f7efdc" opacity="0.85" />
+
+          <g class="cloud" opacity="0.55" fill="#fdfaf2">
+            <ellipse cx="180" cy="150" rx="96" ry="26" />
+            <ellipse cx="240" cy="136" rx="62" ry="22" />
+          </g>
+          <g class="cloud cloud--slow" opacity="0.4" fill="#fdfaf2">
+            <ellipse cx="620" cy="232" rx="120" ry="24" />
+            <ellipse cx="690" cy="220" rx="70" ry="20" />
+          </g>
+
+          <path d="M0 470 L250 320 L470 470 L700 340 L960 480 L1200 360 L1440 470 L1440 900 L0 900 Z" fill="url(#farHill)" />
+          <path d="M0 560 L210 470 L430 570 L680 480 L900 580 L1160 500 L1440 590 L1440 900 L0 900 Z" fill="url(#nearHill)" opacity="0.95" />
+
+          <!-- 田んぼ -->
+          <rect x="0" y="640" width="1440" height="260" fill="#cfcaa8" />
+          <g stroke="#b9b38f" stroke-width="2" opacity="0.8">
+            <path d="M0 690 H1440" />
+            <path d="M0 740 H1440" />
+            <path d="M0 800 H1440" />
+          </g>
+
+          <!-- 線路 -->
+          <g>
+            <rect x="0" y="712" width="1440" height="6" fill="#8c8878" />
+            <rect x="0" y="736" width="1440" height="6" fill="#8c8878" />
+            <g fill="#6f6a5c" opacity="0.75">
+              <rect x="20" y="704" width="26" height="46" />
+              <rect x="120" y="704" width="26" height="46" />
+              <rect x="220" y="704" width="26" height="46" />
+              <rect x="320" y="704" width="26" height="46" />
+              <rect x="420" y="704" width="26" height="46" />
+              <rect x="520" y="704" width="26" height="46" />
+              <rect x="620" y="704" width="26" height="46" />
+              <rect x="720" y="704" width="26" height="46" />
+              <rect x="820" y="704" width="26" height="46" />
+              <rect x="920" y="704" width="26" height="46" />
+              <rect x="1020" y="704" width="26" height="46" />
+              <rect x="1120" y="704" width="26" height="46" />
+              <rect x="1220" y="704" width="26" height="46" />
+              <rect x="1320" y="704" width="26" height="46" />
+              <rect x="1420" y="704" width="26" height="46" />
+            </g>
+          </g>
+
+          <!-- 駅舎 -->
+          <g transform="translate(940 470)">
+            <rect x="0" y="60" width="270" height="150" fill="#e3d8c4" stroke="#4b3826" stroke-width="3" />
+            <path d="M-24 62 L135 -2 L294 62 Z" fill="#6b5946" stroke="#4b3826" stroke-width="3" />
+            <rect x="30" y="106" width="54" height="54" fill="#b9c9c6" stroke="#4b3826" stroke-width="2" />
+            <rect x="108" y="106" width="54" height="54" fill="#b9c9c6" stroke="#4b3826" stroke-width="2" />
+            <rect x="192" y="118" width="46" height="92" fill="#8a6f52" stroke="#4b3826" stroke-width="2" />
+          </g>
+
+          <!-- 駅名標 -->
+          <g transform="translate(300 592)">
+            <rect x="26" y="0" width="8" height="120" fill="#6f6a5c" />
+            <rect x="-52" y="-46" width="164" height="52" rx="3" fill="#fdfaf1" stroke="#4b3826" stroke-width="3" />
+            <text x="30" y="-12" text-anchor="middle" font-size="26" font-family="serif" fill="#2f2a24" letter-spacing="6">
+              こもれ
+            </text>
+          </g>
+
+          <!-- 電柱 -->
+          <g fill="#7d786b">
+            <rect x="620" y="560" width="7" height="180" />
+            <rect x="596" y="576" width="55" height="5" />
+            <rect x="1330" y="590" width="7" height="150" />
+            <rect x="1310" y="604" width="48" height="5" />
+          </g>
+        </svg>
+      </div>
+
+      <div class="hero__inner">
+        <div class="hero__sign">
+          <p class="hero__station">木洩駅</p>
+          <p class="hero__romaji">KOMORE</p>
+          <div class="hero__neighbors">
+            <span>← 柊野</span>
+            <span>｜</span>
+            <span>笹倉 →</span>
+          </div>
+        </div>
+        <p class="hero__lead">
+          一日十二本の汽車と、<br />
+          風の音だけが時刻を知らせる無人駅。<br />
+          待つ時間そのものが、この駅の景色です。
+        </p>
+      </div>
+
+      <p class="hero__scroll">SCROLL</p>
+    </section>
+
+    <!-- 駅のこと -->
+    <section class="about" id="about">
+      <div class="section">
+        <div class="section__head reveal">
+          <p class="section__num">01</p>
+          <h2 class="section__title">駅のこと</h2>
+          <p class="section__sub">木洩の集落と、木造駅舎の九十年</p>
+        </div>
+
+        <div class="about__grid reveal">
+          <div class="about__text">
+            <p>
+              木洩駅は、山と田のあいだにぽつんと置かれた、単式ホーム一面だけの小さな駅です。
+              昭和のはじめに材木を運ぶために開かれ、いまは通学の高校生と、
+              年に数度の帰省客、そして季節を撮りに来る人を静かに迎えています。
+            </p>
+            <p>
+              改札はありません。切符は待合室の木箱に入れ、扉はいつでも開いています。
+              床板は歩くたびに軋み、窓からは午後の光が斜めに差し込みます。
+              駅名の「木洩」は、ホームの桜が落とす木洩れ日に由来すると伝えられています。
+            </p>
+            <p>
+              列車が去ったあと、線路のきしみが遠ざかり、また虫の声が戻ってくる。
+              その数十秒の静けさに出会うために、人はこの駅で降ります。
+            </p>
+          </div>
+
+          <ul class="about__facts">
+            <li><span class="label">所在地</span><span class="value">木洩町 大字檜原 1-2</span></li>
+            <li><span class="label">開業</span><span class="value">昭和8年（1933年）</span></li>
+            <li><span class="label">駅の構造</span><span class="value">地上駅・単式ホーム 1面1線</span></li>
+            <li><span class="label">駅員</span><span class="value">無人駅（乗車駅証明書発行機あり）</span></li>
+            <li><span class="label">一日の発着</span><span class="value">上り 6本 / 下り 6本</span></li>
+            <li><span class="label">一日平均乗車人員</span><span class="value">17人</span></li>
+            <li><span class="label">待合室</span><span class="value">終日開放・薪ストーブ（冬季）</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 時刻表 -->
+    <section class="section" id="timetable">
+      <div class="section__head reveal">
+        <p class="section__num">02</p>
+        <h2 class="section__title">時刻表</h2>
+        <p class="section__sub">乗り遅れても、次の一本まで待てばいい</p>
+      </div>
+
+      <div class="timetable__board reveal">
+        <p class="timetable__next">
+          <span id="nextLabel">つぎの列車</span>
+          <strong id="nextTime">--:--</strong>
+          <span id="nextInfo">時刻を読み込んでいます</span>
+        </p>
+
+        <div class="timetable__tabs" role="tablist" aria-label="行先の切り替え">
+          <button class="tab" type="button" role="tab" data-dir="up" aria-selected="true">
+            上り｜柊野方面
+          </button>
+          <button class="tab" type="button" role="tab" data-dir="down" aria-selected="false">
+            下り｜笹倉方面
+          </button>
+        </div>
+
+        <div class="hours" id="hours"></div>
+
+        <p class="timetable__note">
+          ※ 平日・土休日とも同じダイヤです。橙色は当日の最終列車を示します。<br />
+          ※ 降雪期（12月〜3月）は始発が20分ほど遅れることがあります。
+        </p>
+      </div>
+    </section>
+
+    <!-- 四季 -->
+    <section class="seasons" id="seasons">
+      <div class="section">
+        <div class="section__head reveal">
+          <p class="section__num">03</p>
+          <h2 class="section__title">四季のホーム</h2>
+          <p class="section__sub">同じ一両が、季節ごとに違う色を連れてくる</p>
+        </div>
+
+        <div class="seasons__stage reveal" id="stage">
+          <article class="slide is-active" data-season="spring">
+            <div class="slide__art" aria-hidden="true">
+              <svg viewBox="0 0 1200 520" preserveAspectRatio="xMidYMid slice">
+                <rect width="1200" height="520" fill="#e8dfe3" />
+                <path d="M0 300 L300 190 L560 300 L860 200 L1200 310 L1200 520 L0 520 Z" fill="#b7c3a7" />
+                <rect y="360" width="1200" height="160" fill="#cbd3ae" />
+                <g fill="#f0c4d0">
+                  <circle cx="220" cy="180" r="92" />
+                  <circle cx="320" cy="150" r="74" />
+                  <circle cx="130" cy="150" r="66" />
+                </g>
+                <rect x="204" y="180" width="16" height="190" fill="#7a5c3e" />
+                <g fill="#f6dbe3" opacity="0.9">
+                  <circle cx="470" cy="250" r="6" />
+                  <circle cx="560" cy="320" r="5" />
+                  <circle cx="640" cy="210" r="6" />
+                  <circle cx="760" cy="300" r="5" />
+                  <circle cx="900" cy="240" r="6" />
+                </g>
+                <rect y="392" width="1200" height="8" fill="#8c8878" />
+                <rect y="428" width="1200" height="8" fill="#8c8878" />
+              </svg>
+            </div>
+            <div class="slide__body">
+              <h3 class="slide__season">春｜花のホーム</h3>
+              <p class="slide__copy">
+                ホームの端に立つ一本桜が、線路まで花びらを届けます。
+                四月の朝、始発を待つ高校生の肩に、音もなく春が積もります。
+              </p>
+            </div>
+          </article>
+
+          <article class="slide" data-season="summer">
+            <div class="slide__art" aria-hidden="true">
+              <svg viewBox="0 0 1200 520" preserveAspectRatio="xMidYMid slice">
+                <rect width="1200" height="520" fill="#cfe3e6" />
+                <circle cx="980" cy="120" r="64" fill="#fdf3d4" />
+                <path d="M0 290 L280 170 L540 290 L840 180 L1200 300 L1200 520 L0 520 Z" fill="#7f9c6d" />
+                <rect y="350" width="1200" height="170" fill="#9dc077" />
+                <g stroke="#88ae63" stroke-width="3" opacity="0.7">
+                  <path d="M0 400 H1200" />
+                  <path d="M0 448 H1200" />
+                  <path d="M0 496 H1200" />
+                </g>
+                <g fill="#fdfaf2" opacity="0.85">
+                  <ellipse cx="300" cy="110" rx="110" ry="34" />
+                  <ellipse cx="380" cy="92" rx="70" ry="26" />
+                </g>
+                <rect y="372" width="1200" height="8" fill="#8c8878" />
+                <rect y="408" width="1200" height="8" fill="#8c8878" />
+              </svg>
+            </div>
+            <div class="slide__body">
+              <h3 class="slide__season">夏｜青田の風</h3>
+              <p class="slide__copy">
+                入道雲と、みずみずしい青田。待合室の扇風機が首を振り、
+                遠くの踏切がひとつ鳴るたび、蝉の声がいっせいに止みます。
+              </p>
+            </div>
+          </article>
+
+          <article class="slide" data-season="autumn">
+            <div class="slide__art" aria-hidden="true">
+              <svg viewBox="0 0 1200 520" preserveAspectRatio="xMidYMid slice">
+                <rect width="1200" height="520" fill="#efe0c8" />
+                <path d="M0 300 L290 180 L560 300 L860 190 L1200 305 L1200 520 L0 520 Z" fill="#c08a4e" />
+                <rect y="360" width="1200" height="160" fill="#d8b268" />
+                <g fill="#a4553c">
+                  <circle cx="880" cy="190" r="86" />
+                  <circle cx="960" cy="220" r="62" />
+                  <circle cx="800" cy="228" r="58" />
+                </g>
+                <rect x="866" y="200" width="16" height="180" fill="#6b4b2e" />
+                <g fill="#a4553c" opacity="0.8">
+                  <circle cx="300" cy="270" r="6" />
+                  <circle cx="420" cy="330" r="5" />
+                  <circle cx="530" cy="240" r="6" />
+                  <circle cx="640" cy="320" r="5" />
+                </g>
+                <rect y="392" width="1200" height="8" fill="#8c8878" />
+                <rect y="428" width="1200" height="8" fill="#8c8878" />
+              </svg>
+            </div>
+            <div class="slide__body">
+              <h3 class="slide__season">秋｜稲刈りのあと</h3>
+              <p class="slide__copy">
+                刈り取られた田に、はさ掛けの列が並びます。
+                夕方の列車はもう灯りをつけて、山の稜線を薄い紫に残していきます。
+              </p>
+            </div>
+          </article>
+
+          <article class="slide" data-season="winter">
+            <div class="slide__art" aria-hidden="true">
+              <svg viewBox="0 0 1200 520" preserveAspectRatio="xMidYMid slice">
+                <rect width="1200" height="520" fill="#dfe6ea" />
+                <path d="M0 300 L300 185 L570 300 L860 195 L1200 305 L1200 520 L0 520 Z" fill="#c6ced3" />
+                <rect y="360" width="1200" height="160" fill="#f0f3f5" />
+                <g fill="#a8b3b8">
+                  <rect x="200" y="230" width="14" height="150" />
+                  <rect x="620" y="250" width="12" height="130" />
+                </g>
+                <g fill="#ffffff" opacity="0.9">
+                  <circle cx="180" cy="120" r="4" />
+                  <circle cx="340" cy="200" r="5" />
+                  <circle cx="500" cy="110" r="4" />
+                  <circle cx="700" cy="180" r="5" />
+                  <circle cx="880" cy="120" r="4" />
+                  <circle cx="1040" cy="210" r="5" />
+                </g>
+                <rect y="392" width="1200" height="8" fill="#9aa2a6" />
+                <rect y="428" width="1200" height="8" fill="#9aa2a6" />
+              </svg>
+            </div>
+            <div class="slide__body">
+              <h3 class="slide__season">冬｜灯りのともる待合室</h3>
+              <p class="slide__copy">
+                雪に埋もれたホームで、ただひとつ暖かいのが待合室の裸電球。
+                薪ストーブの前で、誰かが置いていった文庫本のページがめくれます。
+              </p>
+            </div>
+          </article>
+        </div>
+
+        <div class="seasons__nav" id="stageNav"></div>
+      </div>
+    </section>
+
+    <!-- 周辺 -->
+    <section class="section" id="walks">
+      <div class="section__head reveal">
+        <p class="section__num">04</p>
+        <h2 class="section__title">まちを歩く</h2>
+        <p class="section__sub">次の列車までの、二時間の使いかた</p>
+      </div>
+
+      <div class="walks reveal">
+        <article class="walk">
+          <svg class="walk__icon" viewBox="0 0 64 64" aria-hidden="true">
+            <path d="M8 44 L32 16 L56 44 Z" fill="none" stroke="#a4553c" stroke-width="3" />
+            <path d="M20 44 L32 30 L44 44" fill="none" stroke="#7a5c3e" stroke-width="2.5" />
+            <path d="M4 52 H60" stroke="#7a5c3e" stroke-width="2.5" />
+          </svg>
+          <p class="walk__time">徒歩 8分</p>
+          <h3 class="walk__name">檜原の一本道</h3>
+          <p class="walk__text">
+            駅を出て左へ。杉並木がまっすぐ続き、道の終わりに小さな鎮守の森が見えます。
+            風が抜けると、木洩れ日が路面で揺れます。
+          </p>
+        </article>
+
+        <article class="walk">
+          <svg class="walk__icon" viewBox="0 0 64 64" aria-hidden="true">
+            <rect x="12" y="24" width="40" height="26" fill="none" stroke="#a4553c" stroke-width="3" />
+            <path d="M8 24 L32 10 L56 24" fill="none" stroke="#7a5c3e" stroke-width="3" />
+            <rect x="28" y="36" width="8" height="14" fill="#7a5c3e" />
+          </svg>
+          <p class="walk__time">徒歩 12分</p>
+          <h3 class="walk__name">よろずや 松尾商店</h3>
+          <p class="walk__text">
+            集落にただ一軒の商店。瓶のラムネと、手書きの値札。
+            店先の縁台は、列車待ちの人のための特等席です。
+          </p>
+        </article>
+
+        <article class="walk">
+          <svg class="walk__icon" viewBox="0 0 64 64" aria-hidden="true">
+            <path d="M6 40 Q20 28 32 40 T58 40" fill="none" stroke="#a4553c" stroke-width="3" />
+            <path d="M6 50 Q20 38 32 50 T58 50" fill="none" stroke="#8d9b8a" stroke-width="2.5" />
+            <circle cx="46" cy="18" r="7" fill="none" stroke="#7a5c3e" stroke-width="2.5" />
+          </svg>
+          <p class="walk__time">徒歩 20分</p>
+          <h3 class="walk__name">木洩川の沈下橋</h3>
+          <p class="walk__text">
+            欄干のない低い橋。夏は子どもの飛び込み台、秋は流れる落ち葉の見物席。
+            川面に列車の音だけが渡っていきます。
+          </p>
+        </article>
+
+        <article class="walk">
+          <svg class="walk__icon" viewBox="0 0 64 64" aria-hidden="true">
+            <path d="M14 46 V22 H50 V46" fill="none" stroke="#a4553c" stroke-width="3" />
+            <path d="M10 22 H54" stroke="#7a5c3e" stroke-width="3" />
+            <path d="M22 46 V34 H42 V46" fill="none" stroke="#8d9b8a" stroke-width="2.5" />
+          </svg>
+          <p class="walk__time">徒歩 25分</p>
+          <h3 class="walk__name">旧・木洩分校</h3>
+          <p class="walk__text">
+            三十年前に閉じた木造校舎。いまは集落の集会所として、
+            月に一度だけ窓が開き、オルガンの音が漏れてきます。
+          </p>
+        </article>
+
+        <article class="walk">
+          <svg class="walk__icon" viewBox="0 0 64 64" aria-hidden="true">
+            <path d="M12 44 C12 28 22 18 32 18 C42 18 52 28 52 44 Z" fill="none" stroke="#a4553c" stroke-width="3" />
+            <path d="M32 44 V26" stroke="#7a5c3e" stroke-width="2.5" />
+            <path d="M6 52 H58" stroke="#8d9b8a" stroke-width="2.5" />
+          </svg>
+          <p class="walk__time">徒歩 30分</p>
+          <h3 class="walk__name">棚田の見晴らし台</h3>
+          <p class="walk__text">
+            坂を上りきると、集落の全景と線路の一本線。
+            列車が横切る二十秒のために、三脚を立てる人がいます。
+          </p>
+        </article>
+
+        <article class="walk">
+          <svg class="walk__icon" viewBox="0 0 64 64" aria-hidden="true">
+            <circle cx="32" cy="32" r="18" fill="none" stroke="#a4553c" stroke-width="3" />
+            <path d="M32 20 V32 L40 38" fill="none" stroke="#7a5c3e" stroke-width="2.5" />
+          </svg>
+          <p class="walk__time">駅で過ごす</p>
+          <h3 class="walk__name">待合室のベンチ</h3>
+          <p class="walk__text">
+            どこへも行かない、という選択。木の匂いと、時計の音と、
+            線路の向こうで揺れる草。それだけで二時間は足ります。
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- 駅ノート -->
+    <section class="notes" id="notes">
+      <div class="section">
+        <div class="section__head reveal">
+          <p class="section__num">05</p>
+          <h2 class="section__title">駅ノート</h2>
+          <p class="section__sub">待合室の机に置かれた、名前のない手紙</p>
+        </div>
+
+        <div class="notes__list reveal">
+          <article class="note">
+            <p class="note__text">
+              始発で来ました。誰もいないホームで、鳥の声を三十分聞いていました。
+              こんなに何もしない朝は、久しぶりです。
+            </p>
+            <p class="note__meta">4月12日／東京から</p>
+          </article>
+
+          <article class="note">
+            <p class="note__text">
+              三年ぶりの帰省。駅名標が新しくなっていて少し寂しい。
+              でも、桜の位置は昔のままでした。
+            </p>
+            <p class="note__meta">8月3日／木洩出身</p>
+          </article>
+
+          <article class="note">
+            <p class="note__text">
+              終電を逃しました。ストーブに薪をくべてくれた方、ありがとうございました。
+              名前も聞けないまま朝が来ました。
+            </p>
+            <p class="note__meta">1月20日／名前のない乗客</p>
+          </article>
+
+          <article class="note">
+            <p class="note__text">
+              毎日ここから学校へ通っています。卒業したらこの駅を使わなくなるのが、
+              いまいちばん、こわいです。
+            </p>
+            <p class="note__meta">11月7日／高校3年</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- アクセス -->
+    <section class="section" id="access">
+      <div class="section__head reveal">
+        <p class="section__num">06</p>
+        <h2 class="section__title">アクセス</h2>
+        <p class="section__sub">遠回りも、旅のうち</p>
+      </div>
+
+      <div class="access__grid reveal">
+        <div class="access__map">
+          <iframe
+            title="木洩駅 周辺地図（イメージ）"
+            src="https://maps.google.com/maps?q=%E7%94%B0%E8%88%8E%E3%81%AE%E7%84%A1%E4%BA%BA%E9%A7%85&output=embed&z=9"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+
+        <ul class="access__list">
+          <li><b>鉄道</b>檜原本線・柊野駅から普通列車で22分（一日6往復）</li>
+          <li><b>車</b>檜原I.C.から県道38号を北へ約25分／駅前に無料駐車場3台</li>
+          <li><b>バス</b>木洩町コミュニティバス「駅前」下車すぐ（平日3便）</li>
+          <li><b>自転車</b>柊野駅前のレンタサイクルで川沿いを約1時間</li>
+          <li><b>そのほか</b>待合室は終日開放。冬季は防寒具をお持ちください。ごみはお持ち帰りください。</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p class="footer__mark">木洩駅</p>
+
+      <svg class="footer__rail" viewBox="0 0 620 40" aria-hidden="true">
+        <rect y="12" width="620" height="3" fill="#8d9b8a" />
+        <rect y="26" width="620" height="3" fill="#8d9b8a" />
+        <g fill="#c3bba6">
+          <rect x="10" y="8" width="12" height="25" />
+          <rect x="70" y="8" width="12" height="25" />
+          <rect x="130" y="8" width="12" height="25" />
+          <rect x="190" y="8" width="12" height="25" />
+          <rect x="250" y="8" width="12" height="25" />
+          <rect x="310" y="8" width="12" height="25" />
+          <rect x="370" y="8" width="12" height="25" />
+          <rect x="430" y="8" width="12" height="25" />
+          <rect x="490" y="8" width="12" height="25" />
+          <rect x="550" y="8" width="12" height="25" />
+        </g>
+      </svg>
+
+      <p class="footer__note">
+        このサイトは架空の駅「木洩駅」を題材にした、田舎の駅の世界観を伝えるための制作物です。<br />
+        駅名・時刻・地名はすべて創作であり、実在の駅とは関係ありません。<br />
+        &copy; KOMORE STATION
+      </p>
+    </footer>
+
+    <script>
+      (function () {
+        "use strict";
+
+        /* ---- ハンバーガーメニュー ---- */
+        var nav = document.getElementById("globalNav");
+        var toggle = document.querySelector(".nav__toggle");
+
+        toggle.addEventListener("click", function () {
+          var open = nav.classList.toggle("is-open");
+          toggle.setAttribute("aria-expanded", String(open));
+        });
+
+        nav.addEventListener("click", function (e) {
+          if (e.target.tagName === "A") {
+            nav.classList.remove("is-open");
+            toggle.setAttribute("aria-expanded", "false");
+          }
+        });
+
+        /* ---- 時刻表 ---- */
+        var TIMETABLE = {
+          up: [
+            [6, [12]],
+            [7, [4, 48]],
+            [10, [26]],
+            [13, [9]],
+            [16, [31]],
+            [19, [2]]
+          ],
+          down: [
+            [6, [38]],
+            [8, [15]],
+            [11, [40]],
+            [14, [22]],
+            [17, [55]],
+            [20, [18]]
+          ]
+        };
+
+        var DIRECTION_NAME = { up: "柊野方面", down: "笹倉方面" };
+        var hoursEl = document.getElementById("hours");
+        var tabs = Array.prototype.slice.call(document.querySelectorAll(".tab"));
+        var current = "up";
+
+        function pad(n) {
+          return n < 10 ? "0" + n : String(n);
+        }
+
+        function flatten(dir) {
+          var list = [];
+          TIMETABLE[dir].forEach(function (row) {
+            row[1].forEach(function (m) {
+              list.push(row[0] * 60 + m);
+            });
+          });
+          return list.sort(function (a, b) {
+            return a - b;
+          });
+        }
+
+        function renderHours(dir) {
+          var times = flatten(dir);
+          var last = times[times.length - 1];
+
+          hoursEl.innerHTML = TIMETABLE[dir]
+            .map(function (row) {
+              var minutes = row[1]
+                .map(function (m) {
+                  var isLast = row[0] * 60 + m === last;
+                  return (
+                    '<span class="' + (isLast ? "is-last" : "") + '">' +
+                    pad(m) +
+                    (isLast ? "（終）" : "") +
+                    "</span>"
+                  );
+                })
+                .join("");
+              return (
+                '<div class="hours__row"><span class="hours__h">' +
+                pad(row[0]) +
+                '</span><span class="hours__m">' +
+                minutes +
+                "</span></div>"
+              );
+            })
+            .join("");
+        }
+
+        function renderNext(dir) {
+          var now = new Date();
+          var minutesNow = now.getHours() * 60 + now.getMinutes();
+          var times = flatten(dir);
+          var next = null;
+
+          for (var i = 0; i < times.length; i++) {
+            if (times[i] > minutesNow) {
+              next = times[i];
+              break;
+            }
+          }
+
+          var timeEl = document.getElementById("nextTime");
+          var infoEl = document.getElementById("nextInfo");
+          var labelEl = document.getElementById("nextLabel");
+
+          labelEl.textContent = "つぎの列車（" + DIRECTION_NAME[dir] + "）";
+
+          if (next === null) {
+            var first = times[0];
+            timeEl.textContent = pad(Math.floor(first / 60)) + ":" + pad(first % 60);
+            infoEl.textContent = "本日の運行は終了しました。明日の始発でお待ちしています。";
+            return;
+          }
+
+          var wait = next - minutesNow;
+          timeEl.textContent = pad(Math.floor(next / 60)) + ":" + pad(next % 60);
+          infoEl.textContent =
+            "発車まであと " +
+            (wait >= 60 ? Math.floor(wait / 60) + "時間" + (wait % 60) + "分" : wait + "分") +
+            "。ベンチでお待ちください。";
+        }
+
+        function selectDirection(dir) {
+          current = dir;
+          tabs.forEach(function (tab) {
+            tab.setAttribute("aria-selected", String(tab.dataset.dir === dir));
+          });
+          renderHours(dir);
+          renderNext(dir);
+        }
+
+        tabs.forEach(function (tab) {
+          tab.addEventListener("click", function () {
+            selectDirection(tab.dataset.dir);
+          });
+        });
+
+        selectDirection(current);
+        setInterval(function () {
+          renderNext(current);
+        }, 30000);
+
+        /* ---- 四季スライド ---- */
+        var slides = Array.prototype.slice.call(document.querySelectorAll(".slide"));
+        var stageNav = document.getElementById("stageNav");
+        var index = 0;
+        var timer;
+
+        slides.forEach(function (slide, i) {
+          var dot = document.createElement("button");
+          dot.className = "dot";
+          dot.type = "button";
+          dot.setAttribute("aria-label", slide.querySelector(".slide__season").textContent);
+          dot.setAttribute("aria-current", String(i === 0));
+          dot.addEventListener("click", function () {
+            show(i);
+            restart();
+          });
+          stageNav.appendChild(dot);
+        });
+
+        var dots = Array.prototype.slice.call(stageNav.children);
+
+        function show(i) {
+          index = (i + slides.length) % slides.length;
+          slides.forEach(function (slide, n) {
+            slide.classList.toggle("is-active", n === index);
+          });
+          dots.forEach(function (dot, n) {
+            dot.setAttribute("aria-current", String(n === index));
+          });
+        }
+
+        function restart() {
+          clearInterval(timer);
+          timer = setInterval(function () {
+            show(index + 1);
+          }, 6000);
+        }
+
+        restart();
+
+        /* ---- スクロール表示 ---- */
+        var targets = document.querySelectorAll(".reveal");
+
+        if ("IntersectionObserver" in window) {
+          var observer = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add("is-shown");
+                  observer.unobserve(entry.target);
+                }
+              });
+            },
+            { threshold: 0.15 }
+          );
+
+          Array.prototype.forEach.call(targets, function (t) {
+            observer.observe(t);
+          });
+        } else {
+          Array.prototype.forEach.call(targets, function (t) {
+            t.classList.add("is-shown");
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
